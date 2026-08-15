@@ -1,0 +1,367 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Design system definition.
+ *
+ * The @theme inline block maps CSS custom properties to Tailwind utility
+ * classes (e.g. --color-primary -> bg-primary, text-primary).
+ *
+ * The :root and .dark blocks define the actual color values using oklch.
+ * All colors MUST use oklch format.
+ *
+ * To add a new semantic color:
+ * 1. Add the variable to :root (light value) and .dark (dark value)
+ * 2. Register it in @theme inline as --color-<name>: var(--<name>)
+ */
+
+@theme inline {
+  --font-display: "Cormorant Garamond", "Playfair Display", serif;
+  --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-cream: var(--cream);
+  --color-sand: var(--sand);
+  --color-clay: var(--clay);
+  --color-gold: var(--gold);
+  --color-ink: var(--ink);
+  --shadow-card: var(--shadow-card-value);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.25rem;
+
+  /* brand palette sampled from the design */
+  --cream: oklch(0.964 0.011 84.6); /* #F7F2EA section wash */
+  --sand: oklch(0.925 0.018 80); /* #EDE3D6 card wash */
+  --clay: oklch(0.845 0.03 72); /* #DCC9B4 borders on cream */
+  --gold: oklch(0.585 0.072 62); /* #A5794E accent / prices */
+  --ink: oklch(0.19 0.005 60); /* #1C1A18 headings & buttons */
+
+  --background: oklch(0.995 0.002 90);
+  --foreground: var(--ink);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--ink);
+  --popover: oklch(1 0 0);
+  --popover-foreground: var(--ink);
+  --primary: var(--ink);
+  --primary-foreground: oklch(0.985 0.004 90);
+  --secondary: var(--cream);
+  --secondary-foreground: var(--ink);
+  --muted: var(--cream);
+  --muted-foreground: oklch(0.53 0.014 70);
+  --accent: var(--gold);
+  --accent-foreground: oklch(0.99 0.003 90);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.984 0.003 247.858);
+  --border: oklch(0.905 0.012 80);
+  --input: oklch(0.905 0.012 80);
+  --ring: var(--gold);
+  --chart-1: var(--gold);
+  --chart-2: var(--clay);
+  --chart-3: var(--sand);
+  --chart-4: oklch(0.7 0.05 70);
+  --chart-5: oklch(0.4 0.03 65);
+  --sidebar: var(--cream);
+  --sidebar-foreground: var(--ink);
+  --sidebar-primary: var(--ink);
+  --sidebar-primary-foreground: oklch(0.99 0.003 90);
+  --sidebar-accent: var(--sand);
+  --sidebar-accent-foreground: var(--ink);
+  --sidebar-border: oklch(0.905 0.012 80);
+  --sidebar-ring: var(--gold);
+
+  --shadow-card-value: 0 1px 2px oklch(0.19 0.005 60 / 4%), 0 8px 24px -12px oklch(0.19 0.005 60 / 10%);
+}
+
+/* The design specifies a single warm light theme, so it is forced explicitly
+   rather than letting the browser invent a dark rendering of it. */
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    color-scheme: light;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+}
+
+/* type styles measured from the source design */
+@utility eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility section-title {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility link-quiet {
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+  transition: color 200ms ease;
+  &:hover {
+    color: var(--gold);
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility marquee-track {
+  animation: marquee 26s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility rise-in {
+  animation: rise-in 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* Print: only the invoice panel goes on paper, never the whole storefront. */
+@media print {
+  body {
+    background: #fff;
+  }
+  body * {
+    visibility: hidden;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 100%;
+    border: 0 !important;
+  }
+}
+
+/* ---------------------------------------------------------------
+   OTP verification interaction (see components/OtpVerify.tsx)
+   --------------------------------------------------------------- */
+
+@utility otp-card {
+  background: color-mix(in oklab, var(--ink) 92%, black);
+  border: 1px solid color-mix(in oklab, var(--cream) 10%, transparent);
+  box-shadow: 0 30px 80px -40px rgb(0 0 0 / 0.8);
+}
+
+@utility otp-cell {
+  transition:
+    transform 620ms cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 320ms ease,
+    border-color 280ms ease,
+    color 280ms ease;
+  background: color-mix(in oklab, var(--cream) 5%, transparent);
+}
+
+@utility otp-orbit {
+  animation: otp-orbit 2.6s linear infinite;
+}
+
+@keyframes otp-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@utility otp-pop {
+  animation: otp-pop 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes otp-pop {
+  0% {
+    transform: scale(0.82);
+  }
+  60% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@utility otp-caret {
+  display: block;
+  width: 2px;
+  height: 22px;
+  background: var(--gold);
+  animation: otp-caret 1s steps(2, start) infinite;
+}
+
+@keyframes otp-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+@utility otp-seal {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  animation: otp-seal-in 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition:
+    border-radius 520ms cubic-bezier(0.65, 0, 0.35, 1),
+    width 520ms cubic-bezier(0.65, 0, 0.35, 1),
+    height 520ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@utility otp-seal-done {
+  width: 62px;
+  height: 62px;
+  border-radius: 999px;
+}
+
+@keyframes otp-seal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@utility otp-tick {
+  stroke-dasharray: 28;
+  stroke-dashoffset: 28;
+  animation: otp-tick 460ms 140ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes otp-tick {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@utility otp-fade {
+  animation: otp-fade 420ms ease both;
+}
+
+@keyframes otp-fade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@utility otp-dot {
+  animation: otp-dot 1.1s ease-in-out infinite;
+}
+
+@keyframes otp-dot {
+  50% {
+    opacity: 0.25;
+  }
+}

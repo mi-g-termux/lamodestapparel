@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: velora
+      POSTGRES_PASSWORD: change-me-please
+      POSTGRES_DB: velora
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U velora"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      DEPLOY_TARGET: node
+      PORT: 3000
+      DATABASE_URL: postgresql://velora:change-me-please@db:5432/velora
+      APP_SECRET: replace-with-32-random-characters-min
+      CRON_SECRET: replace-with-a-random-string
+      UPLOAD_DIR: /app/uploads
+      TRUST_PROXY: 1
+    ports:
+      - "3000:3000"
+    volumes:
+      - uploads:/app/uploads
+
+volumes:
+  db-data:
+  uploads:

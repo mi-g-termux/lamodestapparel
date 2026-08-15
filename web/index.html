@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Velora</title>
+    <meta name="description" content="Velora — modest apparel" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600"
+    />
+    <script>
+      /* Startup diagnostics. A blank white page is the worst possible error
+         message, so any script failure before React mounts is painted into the
+         page instead of hiding in the console. Plain ES5, no imports, so this
+         cannot itself fail. */
+      (function () {
+        var painted = false;
+        function paint(title, detail) {
+          if (painted) return;
+          painted = true;
+          var root = document.getElementById("root");
+          if (!root) return;
+          root.setAttribute(
+            "style",
+            "font:14px/1.6 ui-monospace,Consolas,monospace;padding:24px;max-width:900px;margin:0 auto;color:#111",
+          );
+          var h = document.createElement("h1");
+          h.setAttribute("style", "font:600 18px/1.4 system-ui,sans-serif;margin:0 0 8px");
+          h.textContent = title;
+          var p = document.createElement("pre");
+          p.setAttribute(
+            "style",
+            "white-space:pre-wrap;word-break:break-word;background:#f6f6f6;border:1px solid #ddd;border-radius:6px;padding:12px;margin:0",
+          );
+          p.textContent = detail;
+          var hint = document.createElement("p");
+          hint.setAttribute("style", "font:13px/1.6 system-ui,sans-serif;color:#555");
+          hint.textContent =
+            "Copy the text above and send it over. Press F12 \u2192 Console for the full stack.";
+          root.appendChild(h);
+          root.appendChild(p);
+          root.appendChild(hint);
+        }
+        window.__veloraPaintStartupError = paint;
+        window.addEventListener("error", function (event) {
+          var e = event.error;
+          paint(
+            "The app failed to start",
+            (e && e.stack) || (e && e.message) || event.message || "Unknown script error",
+          );
+        });
+        window.addEventListener("unhandledrejection", function (event) {
+          var r = event.reason;
+          paint("The app failed to start", (r && r.stack) || (r && r.message) || String(r));
+        });
+        /* If nothing has rendered after 8s, say so rather than showing white. */
+        window.setTimeout(function () {
+          var root = document.getElementById("root");
+          if (root && root.childNodes.length === 0) {
+            paint(
+              "The app never mounted",
+              "index.html loaded but no React output appeared within 8 seconds.\n\nUsual cause: the /assets/*.js bundle did not load. Open F12 \u2192 Network and look for a red 404 on a file under /assets/.",
+            );
+          }
+        }, 8000);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
